@@ -34,7 +34,8 @@ setup(
     long_description=read_readme(),
     long_description_content_type="text/markdown",
     url="https://github.com/example/instrument-response-function",
-    packages=find_packages(),
+    packages=find_packages(where="."),
+    package_dir={"": "."},
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Science/Research",

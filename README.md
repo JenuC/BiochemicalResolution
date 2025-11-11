@@ -52,7 +52,7 @@ pip install -e .
 
 ```python
 import numpy as np
-from src import AnalysisParameters, fisher_information
+from src.python import AnalysisParameters, fisher_information
 
 # Set up analysis parameters
 params = AnalysisParameters(
@@ -85,16 +85,25 @@ jupyter notebook notebooks/
 ## Package Structure
 
 ```
-InstrumentResponseFunction/
-├── src/                          # Core package modules
-│   ├── __init__.py
-│   ├── core.py                   # Data structures and configuration
-│   ├── fisher_information.py     # Fisher information calculations
-│   ├── irf_functions.py         # IRF models and convolution
-│   ├── monte_carlo.py           # Monte Carlo simulations
-│   └── visualization.py         # Plotting and visualization
-├── notebooks/                    # Jupyter notebooks
-├── data/                        # Data files
+BiochemicalResolution/
+├── src/
+│   └── python/                  # Core package modules
+│       ├── __init__.py
+│       ├── core.py              # Data structures and configuration
+│       ├── fisher_information.py # Fisher information calculations
+│       ├── irf_functions.py     # IRF models and convolution
+│       ├── monte_carlo.py       # Monte Carlo simulations
+│       └── visualization.py     # Plotting and visualization
+├── notebooks/                   # Jupyter notebooks (converted from Mathematica)
+├── mathematica/                 # Original Mathematica files
+│   ├── notebooks/               # Original .nb files
+│   ├── docs/                    # PDF documentation
+│   └── data/                    # Original data files (.npy, .mat)
+├── output/                      # Generated outputs
+│   ├── plots/                   # Generated plots and figures
+│   ├── demos/                   # Demo and test scripts
+│   └── validation/              # Validation reports
+├── data/                        # Runtime data
 │   ├── generated/               # Generated analysis results
 │   └── reference/               # Reference data for validation
 ├── requirements.txt             # Package dependencies
@@ -141,17 +150,17 @@ pip install -e .[dev]
 pytest
 
 # Run with coverage
-pytest --cov=src
+pytest --cov=src/python
 ```
 
 ### Code Formatting
 
 ```bash
 # Format code
-black src/ notebooks/
+black src/python/ notebooks/
 
 # Check style
-flake8 src/
+flake8 src/python/
 ```
 
 ## Contributing
@@ -178,7 +187,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - **[Usage Examples](USAGE_EXAMPLES.md)**: Practical examples and parameter guidelines
 - **[Troubleshooting Guide](TROUBLESHOOTING.md)**: Common issues and solutions
-- **[Validation Report](VALIDATION_REPORT.md)**: Numerical accuracy validation
+- **[Validation Report](output/validation/VALIDATION_REPORT.md)**: Numerical accuracy validation
 - **[Plot Customization](PLOT_CUSTOMIZATION_GUIDE.md)**: Advanced plotting options
 - **[Specialized Plots](SPECIALIZED_PLOTS_DOCUMENTATION.md)**: Specialized analysis plots
 
@@ -186,7 +195,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 #### Scenario 1: Quick Fisher Information Analysis
 ```python
-from src import AnalysisParameters, fisher_information
+from src.python import AnalysisParameters, fisher_information
 import numpy as np
 
 params = AnalysisParameters()
@@ -198,7 +207,7 @@ results = fisher_information.dirac_irf_analysis(
 
 #### Scenario 2: Comparing IRF Effects
 ```python
-from src.visualization import plot_irf_comparison
+from src.python.visualization import plot_irf_comparison
 
 # Compare Dirac vs Gaussian IRF
 results = compare_irf_types(
@@ -210,7 +219,7 @@ plot_irf_comparison(results)
 
 #### Scenario 3: Monte Carlo Validation
 ```python
-from src.monte_carlo import monte_carlo_analysis
+from src.python.monte_carlo import monte_carlo_analysis
 
 # Validate Fisher predictions empirically
 mc_results = monte_carlo_analysis(
@@ -237,5 +246,5 @@ For questions or issues:
 1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md)
 2. Review [Usage Examples](USAGE_EXAMPLES.md)
 3. Check the documentation in the notebooks
-4. Review the [Validation Report](VALIDATION_REPORT.md)
+4. Review the [Validation Report](output/validation/VALIDATION_REPORT.md)
 5. Open an issue on the project repository
